@@ -1,9 +1,6 @@
 package com.application.AKKAPG.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -14,6 +11,7 @@ public class Guest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long guestId;
     String name;
+    @Enumerated(EnumType.STRING)
     Gender gender;
     int age;
     Date dateOfBirth;

@@ -1,6 +1,7 @@
 package com.application.AKKAPG.controller;
 
 import com.application.AKKAPG.entity.Guest;
+import com.application.AKKAPG.repo.GuestRepository;
 import com.application.AKKAPG.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,11 @@ public class GuestController {
     @PostMapping("/addGuests")
     public ResponseEntity<String> addGuest(@RequestBody Guest guest) {
 
-        boolean isAdd = guestService.addGuest(guest);
+        Guest isAdd = guestService.addGuest(guest);
+        System.out.println(isAdd.toString());
 
-        if (isAdd) {
-            return new ResponseEntity<>("Guest added", HttpStatus.CREATED);
+        if (isAdd.getGuestId() != 0) {
+            return new ResponseEntity<>("Guest added "+isAdd.getGuestId(), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Guest not added", HttpStatus.NOT_ACCEPTABLE);
         }

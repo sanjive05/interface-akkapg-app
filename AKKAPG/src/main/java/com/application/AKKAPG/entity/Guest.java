@@ -21,7 +21,9 @@ public class Guest {
     String address;
     String city;
     String AadhaarNo;
-    String roomId;
+    @ManyToOne
+    @JoinColumn(name = "room_id", nullable = false)
+    Room room;
     Date JoiningDate;
     Date vacatingDate;
     Boolean status;

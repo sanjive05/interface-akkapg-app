@@ -1,13 +1,21 @@
 package com.application.AKKAPG.entity;
 
-import java.util.List;
+import jakarta.persistence.*;
+import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+@Entity
+@Data
 public class Room {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     String roomId;
     String roomNo;
-    String max_occupancy;
+    int max_occupancy;
     Boolean isAc;
     Double rentAmount;
-    List<Guest> guests;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    List<Guest> guests = new ArrayList<>();
 
 }

@@ -5,8 +5,7 @@ import { addGuest } from "../services/guestService";
 import MainLayout from "../components/layout/MainLayout";
 
 function AddGuest() {
-  return(
-    <MainLayout>
+  
   const navigate = useNavigate();
   const [saving, setSaving] = useState(false);
   
@@ -163,7 +162,6 @@ function AddGuest() {
       </div>
     </div>
   );
-  </MainLayout>)
 }
 
 // --- COMPONENTS ---

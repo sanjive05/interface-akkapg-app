@@ -10,3 +10,5 @@
  let id = document.getElementById("message")
 
  id.innerHTML = ("Wellcome to JS!")
+
+ console.log( `${id} sanjive `)

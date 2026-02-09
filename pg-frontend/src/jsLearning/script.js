@@ -11,4 +11,4 @@
 
  id.innerHTML = ("Wellcome to JS!")
 
- console.log( `${id} sanjive `)
+ console.log( `${id} sanjive `) 

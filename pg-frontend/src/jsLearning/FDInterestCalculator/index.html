@@ -10,23 +10,33 @@
     <div id = "wrapper">
         <h2>cm to inches</h2>
         <div class="inputDiv">
-            <input type="text" id = "input" placeholder="Length in cm">
+            <input type="text" id = "input" placeholder="Tenure months">
         </div>
         <div>
-            <button  type="submit" onclick="convert()" > Convert To inches</button>
+            <button  type="submit" onclick="fdRate()" > Calculate</button>
         </div>
         <div id = "result">
 
         </div>
     </div>
     <script>
-        function convert(){
-            const cmVal = Number(document.getElementById('input').value)
-            const cToF= (cmVal*(9/5)) + 32
-            // Assignment 
-            // const inchVal = cmVal/2.54
-            const result = document.getElementById('result')
-            result.innerHTML = cToF.toFixed(3) + "inches"
+        function fdRate(){
+            const month = Number(document.getElementById('input').value);
+            let ans = 0;
+            if(month < 3){
+                ans = 5.8;
+            }
+            else if (month >= 3 && month <= 6){
+                ans = 6.5;
+            }
+            else if(month >= 7 && month <= 9 ){
+                ans = 6.8;
+            }
+            else{
+                ans = 7;
+            }
+            let id = document.getElementById('result')
+            id.innerHTML = ans;
         }
     </script>
 </body>

@@ -12,7 +12,7 @@ public class Bill {
     private Long billId;
 
     @ManyToOne
-    @JoinColumn(name = "stay_id")
+    @JoinColumn(name = "stayId")
     private Stay stay;
 
     private Double rentAmount;

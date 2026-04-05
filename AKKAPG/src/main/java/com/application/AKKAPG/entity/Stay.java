@@ -13,11 +13,11 @@ public class Stay {
     private Long stayId;
 
     @ManyToOne
-    @JoinColumn(name = "guest_id")
+    @JoinColumn(name = "guestId")
     private Guest guest;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "roomId")
     private Room room;
 
     private Date joiningDate;

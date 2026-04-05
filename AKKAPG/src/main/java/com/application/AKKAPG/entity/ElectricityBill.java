@@ -10,7 +10,7 @@ public class ElectricityBill {
     private Long electricityBillId;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "roomId")
     private Room room;
 
     private Double totalAmount;

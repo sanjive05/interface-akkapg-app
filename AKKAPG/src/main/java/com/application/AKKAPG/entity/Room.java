@@ -9,7 +9,7 @@ import java.util.List;
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String roomId;
+    Long roomId;
     String roomNo;
     int max_occupancy;
     Boolean isAc;

@@ -21,11 +21,6 @@ public class Guest {
     String address;
     String city;
     String AadhaarNo;
-    @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
-    Room room;
-    Date JoiningDate;
-    Date vacatingDate;
     Boolean status;
     Double advancePaid;
 

@@ -38,6 +38,11 @@ public class GuestController {
         }
     }
 
+    public ResponseEntity<Guest> getGuest(Long guestId){
+        Guest guest = guestService.getGuest(guestId);
+        return new ResponseEntity<>(guest,HttpStatus.OK);
+    }
+
 
 
 

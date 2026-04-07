@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GuestServiceImpl implements GuestService {
@@ -23,5 +24,11 @@ public class GuestServiceImpl implements GuestService {
     @Override
     public Guest addGuest(Guest guest) {
         return guestRepository.save(guest);
+    }
+
+    @Override
+    public Guest getGuest(Long guestId) {
+        Optional<Guest> guest = guestRepository.findById(guestId);
+        return guest.get();
     }
 }

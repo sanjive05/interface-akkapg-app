@@ -11,4 +11,6 @@ public interface GuestService {
 
     public Guest addGuest(Guest guest);
 
+    public Guest getGuest(Long guestId);
+
 }

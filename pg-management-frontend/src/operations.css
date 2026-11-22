@@ -1,0 +1,24 @@
+.ops-actions{display:flex;align-items:center;gap:9px}.ops-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:39px;padding:0 15px;font-size:11px;white-space:nowrap}.month-input{height:39px;border:1px solid #e4e7ee;border-radius:8px;padding:0 11px;color:#505568;background:#fff}.ops-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:13px;margin-bottom:17px}.ops-metrics>div{border:1px solid #eceef3;background:#fff;border-radius:10px;padding:18px;color:#8b90a0;font-size:11px}.ops-metrics strong{display:block;font-size:22px;color:#34384d;margin-top:8px}.ops-modal{max-width:560px}.secondary-button.small{height:29px;padding:0 10px;font-size:10px}.ops-two-col{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin:18px 0}.ops-form{display:grid;gap:13px}.ops-form .ops-button{justify-self:start}.ops-big-number{font-size:34px;font-weight:700;color:#7565e8;margin-top:20px}.ops-muted{font-size:11px;color:#959aaa;line-height:1.7}.ops-section-title{font-size:14px;margin:23px 0 12px}.ops-settings{max-width:580px}.ops-payment-line{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #eef0f4;padding:12px 0;font-size:12px;color:#555a6d}.ops-payment-line small{display:block;font-size:10px;color:#999dad;margin-top:4px}.ops-payment-line strong{color:#34384d}.tenant-table a{color:#6c5dd6;text-decoration:none}@media(max-width:760px){.ops-two-col{grid-template-columns:1fr}.ops-actions{flex-wrap:wrap;justify-content:flex-end}.page-heading-row{gap:12px}.ops-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.workspace-select-label{display:flex;align-items:center;gap:6px;font-size:10px;color:#8c91a1}.workspace-select-label select{border:1px solid #e5e7ef;border-radius:7px;background:#fff;padding:7px 9px;color:#4b5063;font-size:10px;outline:0}.eb-preview{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:13px;border:1px solid #e6e2fb;background:#faf9ff;border-radius:8px;color:#77718f;font-size:10px}.eb-preview strong{display:block;color:#4d486c;font-size:17px;margin-top:5px}.eb-preview small{grid-column:1/-1;line-height:1.5}
+
+/* Dashboard cards open a drill-down list of the underlying records. */
+.dashboard-click-card,.dashboard-metric-click{font:inherit;text-align:left;cursor:pointer;transition:border-color .15s ease,transform .15s ease,box-shadow .15s ease}
+.dashboard-click-card{position:relative;width:100%;border:1px solid #e9ebf2;background:#fff;border-radius:13px;padding:21px 22px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-height:150px}
+.dashboard-click-card:hover,.dashboard-metric-click:hover{border-color:#b9b0f1;box-shadow:0 5px 18px rgba(45,38,90,.07);transform:translateY(-1px)}
+.dashboard-click-card:disabled,.dashboard-metric-click:disabled{cursor:default;opacity:.75}
+.dashboard-card-hint,.dashboard-metric-click small{font-size:10px;color:#8175d6;margin-top:2px}
+.dashboard-metric-click{border:1px solid #eceef3;background:#fff;border-radius:10px;padding:16px 18px;color:#8b90a0;font-size:11px;display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-width:0}
+.dashboard-metric-click strong{font-size:22px;color:#34384d;margin-top:3px}
+.dashboard-detail-backdrop{z-index:1000}
+.dashboard-detail-modal{width:min(760px,calc(100vw - 32px));max-width:760px;max-height:85vh;display:flex;flex-direction:column}
+.dashboard-detail-count{font-size:11px;color:#777d90;padding:12px 0;border-bottom:1px solid #eef0f4}
+.dashboard-detail-list{overflow:auto;min-height:0}
+.dashboard-detail-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:14px;padding:13px 2px;border-bottom:1px solid #eef0f4;font-size:12px}
+.dashboard-detail-row strong{display:block;color:#34384d;font-size:12px}
+.dashboard-detail-row small{display:block;color:#9297a6;font-size:10px;margin-top:4px}
+.dashboard-detail-row>span{color:#555b70;font-size:11px;white-space:nowrap}
+.dashboard-detail-row a{color:#6c5dd6;text-decoration:none;font-size:11px;white-space:nowrap}
+.dashboard-detail-amount{font-weight:700;color:#b65b32!important}
+.dashboard-empty{padding:22px 0}
+@media(max-width:600px){.dashboard-detail-row{grid-template-columns:minmax(0,1fr) auto;gap:8px}.dashboard-detail-row a{grid-column:1/-1;justify-self:start}.dashboard-detail-row>span{white-space:normal;text-align:right}}

@@ -1,0 +1,34 @@
+import { useEffect, useState } from 'react'
+import { Users, BedDouble, Wallet, CircleAlert, Building2, X, DoorOpen, CheckCircle2, FileText } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import api from '../services/api'
+const money = n => `₹${Number(n || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
+const roomText = r => r.roomNumber || r.room || '—'
+export default function DashboardPage() {
+  const pgName = localStorage.getItem('pg_selected_workspace') === 'SUBASH-PG' ? 'SUBASH PG' : 'AKKA PG'
+  const [month,setMonth]=useState(new Date().toISOString().slice(0,7))
+  const [data,setData]=useState(null),[error,setError]=useState(''),[loading,setLoading]=useState(true),[selected,setSelected]=useState(null)
+  useEffect(()=>{let alive=true;setLoading(true);api.get('/dashboard',{params:{month}}).then(r=>{if(alive){setData(r.data);setError('')}}).catch(()=>{if(alive)setError('Unable to load dashboard')}).finally(()=>{if(alive)setLoading(false)});return()=>{alive=false}},[month])
+  const open = (key,title,subtitle,kind) => setSelected({key,title,subtitle,kind})
+  const stats=[
+    ['Active tenants',loading?'Loading…':(data?.activeTenants??'—'),Users,'violet','activeTenantDetails','Currently staying tenants','tenant'],
+    ['Occupied beds',loading?'Loading…':(data?.occupiedBeds??'—'),BedDouble,'blue','occupiedTenantDetails','Tenants occupying beds','tenant'],
+    ['Collected this month',loading?'Loading…':money(data?.received),Wallet,'green','paymentDetails',`Payments received in ${month}`,'payment'],
+    ['Outstanding balance',loading?'Loading…':money(data?.pending),CircleAlert,'orange','dueBillDetails','Tenants with unpaid or partially paid bills','bill']
+  ]
+  const metrics=[
+    ['Expected this month',loading?'Loading…':money(data?.expected),'expectedBillDetails','Bills generated for this month','bill'],
+    ['Paid bills',loading?'Loading…':(data?.paidCount??'—'),'paidBillDetails','Tenants who have fully paid','bill'],
+    ['Bills with dues',loading?'Loading…':(data?.pendingCount??'—'),'dueBillDetails','Tenants who have pending balances','bill'],
+    ['Available beds',loading?'Loading…':(data?.availableBeds??'—'),'availableRoomDetails','Rooms with vacant beds','room']
+  ]
+  const detailRows = selected ? (data?.[selected.key] || []) : []
+  return <div className="dashboard-page"><div className="page-heading-row"><div><span className="eyebrow">{pgName} · OVERVIEW</span><h1>Welcome to {pgName} 👋</h1><p>Your property and collection overview.</p></div><input className="month-input" type="month" value={month} onChange={e=>setMonth(e.target.value)}/></div><section className="welcome-banner"><div className="welcome-copy"><span className="banner-kicker"><Building2 size={15}/> {pgName} MANAGEMENT</span><h2>Your PG, all in one place.</h2><p>Manage tenants, rooms, monthly billing and payments. All records are stored locally in Excel.</p></div><div className="banner-art"><div className="art-building"><Building2 size={54}/></div></div></section>{error&&<div className="form-error">{error}</div>}<div className="stats-grid">{stats.map(([label,value,Icon,tone,key,subtitle,kind])=><button type="button" className="stat-card dashboard-click-card" key={label} onClick={()=>open(key,label,subtitle,kind)} disabled={loading}><div className={`stat-icon ${tone}`}><Icon size={19}/></div><div className="stat-label">{label}</div><div className="stat-value">{value}</div><span className="dashboard-card-hint">Click to view details ↗</span></button>)}</div><div className="ops-metrics">{metrics.map(([label,value,key,subtitle,kind])=><button type="button" key={label} className="dashboard-metric-click" onClick={()=>open(key,label,subtitle,kind)} disabled={loading}><span>{label}</span><strong>{value}</strong><small>View details ↗</small></button>)}</div><div className="ops-two-col"><section className="profile-panel"><h3>Recent payments</h3>{loading?<p className="ops-muted">Loading payments…</p>:data?.recentPayments?.length?data.recentPayments.map(p=><div className="ops-payment-line" key={p.paymentId}><span>{p.tenantName}<small>{p.paymentDate} · {p.paymentMode}</small></span><strong>{money(p.amount)}</strong></div>):<p className="ops-muted">No payments recorded for this month.</p>}</section><section className="profile-panel"><h3>Payment modes</h3>{loading?<p className="ops-muted">Loading payment summary…</p>:Object.entries(data?.paymentsByMode||{}).length?Object.entries(data.paymentsByMode).map(([mode,total])=><div className="ops-payment-line" key={mode}><span>{mode}</span><strong>{money(total)}</strong></div>):<p className="ops-muted">No payment modes to display yet.</p>}</section></div>
+    {selected&&<div className="modal-backdrop dashboard-detail-backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)setSelected(null)}}><section className="tenant-modal dashboard-detail-modal" role="dialog" aria-modal="true" aria-labelledby="dashboard-detail-title"><div className="modal-header"><div><h2 id="dashboard-detail-title">{selected.title}</h2><p>{selected.subtitle} · {month}</p></div><button type="button" className="modal-close" onClick={()=>setSelected(null)} aria-label="Close"><X size={18}/></button></div><div className="dashboard-detail-count">{detailRows.length} record(s)</div>{!detailRows.length?<p className="ops-muted dashboard-empty">No records found for this selection.</p>:<div className="dashboard-detail-list">{detailRows.map((r,i)=><article className="dashboard-detail-row" key={r.billId||r.tenantId||r.roomId||r.paymentId||i}>
+      {selected.kind==='tenant'?<><div><strong>{r.fullName||r.tenantName||'Tenant'}</strong><small>Room {roomText(r)} · Joined {r.joiningDate||'—'}</small></div><span>{r.phone||r.phoneNumber||r.status||'ACTIVE'}</span><Link to={`/tenants/${r.tenantId}`} onClick={()=>setSelected(null)}>View</Link></>:null}
+      {selected.kind==='room'?<><div><strong>Room {roomText(r)}</strong><small>{r.roomType||''} · {r.floor?`Floor ${r.floor} · `:''}{r.occupiedBeds||0} occupied</small></div><span>{r.availableBeds} bed(s) available</span><Link to="/rooms" onClick={()=>setSelected(null)}>Rooms</Link></>:null}
+      {selected.kind==='bill'?<><div><strong>{r.tenantName||'Tenant'}</strong><small>Room {roomText(r)} · {r.billingMonth||month}</small></div><span className="dashboard-detail-amount">{money(r.remainingBalance)} due</span><Link to="/billing" onClick={()=>setSelected(null)}>Billing</Link></>:null}
+      {selected.kind==='payment'?<><div><strong>{r.tenantName||'Tenant'}</strong><small>{r.paymentDate||'—'} · {r.paymentMode||'—'} · Room {roomText(r)}</small></div><span className="dashboard-detail-amount">{money(r.amount)}</span><Link to="/payments" onClick={()=>setSelected(null)}>Payments</Link></>:null}
+    </article>)}</div>}<div className="modal-actions"><button type="button" className="secondary-button" onClick={()=>setSelected(null)}>Close</button></div></section></div>}
+  </div>
+}

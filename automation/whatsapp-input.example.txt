@@ -1,0 +1,6 @@
+sheet_to_process=2026-11
+PATH=C:\pg_data\AKKA-PG-WhatsApp-2026-11.xlsx
+payment_upi_id=your-upi-id@bank
+payment_phone_number=9876543210
+payment_date=Please pay by 10th of this month
+is_food=true
